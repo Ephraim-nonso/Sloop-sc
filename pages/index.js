@@ -1,45 +1,13 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Table from "../components/body/Table";
+import Navbar from "../components/navbar/Navbar";
+import Top from "../components/top-section/Top";
 
 const Home = () => {
   return (
-    <div className='py-6 justify-center text-center'>
-      <div className='flex justify-center'>
-        <ConnectButton />
-      </div>
-
-      <h1 className='text-4xl font-bold mt-6'>🚀 create-web3-frontend</h1>
-      <InfoSection />
-    </div>
-  );
-};
-
-const InfoSection = () => {
-  return (
-    <div className='mt-10'>
-      <h2 className='text-xl font-bold'>If you need help</h2>
-      <div className='flex flex-col gap-2 mt-2'>
-        <a
-          href='https://wagmi.sh'
-          target='_blank'
-          className='underline text-gray-600'
-        >
-          Link to wagmi docs
-        </a>
-        <a
-          href='https://github.com/dhaiwat10/create-web3-frontend'
-          target='_blank'
-          className='underline text-gray-600'
-        >
-          Open an issue on Github
-        </a>
-        <a
-          href='https://twitter.com/dhaiwat10'
-          target='_blank'
-          className='underline text-gray-600'
-        >
-          DM me on Twitter
-        </a>
-      </div>
+    <div className="py-6 justify-center text-center bg-[#F4F6FE] h-screen">
+      <Navbar />
+      <Top />
+      <Table />
     </div>
   );
 };
