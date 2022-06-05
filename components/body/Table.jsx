@@ -3,7 +3,7 @@ import React from "react";
 const Table = () => {
   return (
     <div className="">
-      <table class="table-fixed w-full bg-[#fff] h-96">
+      <table className="table-fixed w-full bg-[#fff] h-96">
         <thead className="text-[#17C7C0]">
           <tr className="p-5">
             <th>Location</th>

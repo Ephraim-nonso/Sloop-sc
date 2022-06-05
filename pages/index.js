@@ -1,15 +1,14 @@
 import Table from "../components/body/Table";
 import Navbar from "../components/navbar/Navbar";
+import Signup from "../components/signup/Signup";
 import Top from "../components/top-section/Top";
 
-const Home = () => {
+const Login = () => {
   return (
-    <div className="py-6 justify-center text-center bg-[#F4F6FE] h-screen">
-      <Navbar />
-      <Top />
-      <Table />
+    <div>
+      <Signup />
     </div>
   );
 };
 
-export default Home;
+export default Login;
