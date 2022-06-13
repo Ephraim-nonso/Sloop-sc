@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import one from "../../assets/Group3.png";
 import two from "../../assets/Group4.png";
@@ -7,8 +7,11 @@ import four from "../../assets/Group6.png";
 import logo from "../../assets/Sloop.png";
 import Link from "next/link";
 import UAuth from "@uauth/js";
+import { UserContext } from "../../context/StateContext";
 
 const Signup = () => {
+  const { login, setLogin } = useContext(UserContext);
+
   const uauth = new UAuth({
     clientID: "53f5cbda-bf4e-4809-946d-a8d7f23786ba",
     redirectUri: "",
@@ -53,7 +56,10 @@ const Signup = () => {
             activities
           </p>
           <Link href="/home">
-            <button className="bg-[#17C7C0] hover:bg-[#17C7d0] text-white font-bold py-2 px-4 rounded">
+            <button
+              className="bg-[#17C7C0] hover:bg-[#17C7d0] text-white font-bold py-2 px-4 rounded"
+              onClick={() => setLogin(true)}
+            >
               Go to dashboard
             </button>
           </Link>

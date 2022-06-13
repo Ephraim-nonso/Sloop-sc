@@ -1,11 +1,13 @@
-import Table from "../components/body/Table";
-import Navbar from "../components/navbar/Navbar";
+import Head from "next/head";
 import Signup from "../components/signup/Signup";
-import Top from "../components/top-section/Top";
 
 const Login = () => {
   return (
     <div>
+      <Head>
+        <title>Sloop</title>
+        <meta name="description" content="Track goods distribution." />
+      </Head>
       <Signup />
     </div>
   );

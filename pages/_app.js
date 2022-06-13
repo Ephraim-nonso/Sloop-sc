@@ -5,6 +5,8 @@ import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { publicProvider } from "wagmi/providers/public";
 import Layout from "../components/layout/Layout";
+import { UserContext } from "../context/StateContext";
+import { useState } from "react";
 
 const { chains, provider } = configureChains(
   [chain.mainnet],
@@ -26,14 +28,18 @@ const wagmiClient = createClient({
 });
 
 function MyApp({ Component, pageProps }) {
+  const [edit, setEdit] = useState(false);
+  const [login, setLogin] = useState(false);
   return (
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <UserContext.Provider value={{ edit, setEdit, login, setLogin }}>
+      <WagmiConfig client={wagmiClient}>
+        <RainbowKitProvider chains={chains}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </UserContext.Provider>
   );
 }
 
