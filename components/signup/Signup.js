@@ -7,10 +7,17 @@ import four from "../../assets/Group6.png";
 import logo from "../../assets/Sloop.png";
 import Link from "next/link";
 import UAuth from "@uauth/js";
-import { UserContext } from "../../context/StateContext";
+import { UserContext, superAdmin } from "../../context/StateContext";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
 
 const Signup = () => {
   const { login, setLogin } = useContext(UserContext);
+  const { data } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const { disconnect } = useDisconnect();
 
   const uauth = new UAuth({
     clientID: "53f5cbda-bf4e-4809-946d-a8d7f23786ba",
@@ -55,14 +62,17 @@ const Signup = () => {
             Your all in one place to track supplies, distribution and day to day
             activities
           </p>
-          <Link href="/home">
-            <button
-              className="bg-[#17C7C0] hover:bg-[#17C7d0] text-white font-bold py-2 px-4 rounded"
-              onClick={() => setLogin(true)}
-            >
-              Go to dashboard
-            </button>
-          </Link>
+
+          {data?.address ? (
+            <Link href={data?.address === superAdmin ? "/home" : "/branch"}>
+              <button
+                className="bg-[#17C7C0] hover:bg-[#17C7d0] text-white font-bold py-2 px-4 rounded"
+                onClick={() => setLogin(true)}
+              >
+                Go to dashboard
+              </button>
+            </Link>
+          ) : null}
 
           <button
             onClick={handleLogin}

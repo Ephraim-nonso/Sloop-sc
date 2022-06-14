@@ -2,10 +2,14 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React, { useContext } from "react";
 import Link from "next/link";
 import SuperAdmin from "../superadmin/SuperAdmin";
-import { UserContext } from "../../context/StateContext";
+import { UserContext, superAdmin } from "../../context/StateContext";
+import { useAccount } from "wagmi";
+import BranchAdmin from "../branchadmin/BranchAdmin";
 
 const Navbar = () => {
   const { login, setLogin } = useContext(UserContext);
+
+  const { data } = useAccount();
 
   return (
     <div className="flex flex-col sm:flex-row justify-between px-10">
@@ -14,7 +18,6 @@ const Navbar = () => {
           className="text-3xl text-[#181350] font-bold"
           onClick={() => {
             setLogin(false);
-            console.log(login);
           }}
         >
           Sloop
@@ -22,7 +25,8 @@ const Navbar = () => {
       </Link>
 
       <div className="flex flex-col sm:flex-row items-center justify-center">
-        {login ? <SuperAdmin /> : null}
+        {data?.address === superAdmin ? <SuperAdmin /> : null}
+        {data?.address && data?.address !== superAdmin ? <BranchAdmin /> : null}
         <ConnectButton />
       </div>
     </div>
