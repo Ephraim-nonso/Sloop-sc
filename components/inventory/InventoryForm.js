@@ -1,7 +1,17 @@
 import React from "react";
 import { BsDot } from "react-icons/bs";
+import { useContract, useAccount } from "wagmi";
+import { contractAbi } from "../../utils/abi.json";
 
 const InventoryForm = () => {
+  // Use wagmi hook to interact with contract.
+  // const contract = useContract();
+
+  // console.log(contract);
+
+  // Get data from wagmi hooks
+  const { data } = useAccount();
+
   return (
     <div className="flex-1 h-80 bg-white">
       <form className="py-5 px-20">

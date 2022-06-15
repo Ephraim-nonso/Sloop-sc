@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { BsDot } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 import { UserContext } from "../../context/StateContext";
+import InventoryForm from "../inventory/InventoryForm";
 
 const SuperAdmin = () => {
   const { edit, setEdit } = useContext(UserContext);
@@ -25,6 +26,12 @@ const SuperAdmin = () => {
         <p>Edit</p>
         <FaEdit color="#17C7C0" size={18} />
       </div>
+
+      {edit ? (
+        <div className="absolute left:1/2 top:3.5 sm:left-3/4 sm:top-20 z-40">
+          <InventoryForm />
+        </div>
+      ) : null}
     </div>
   );
 };

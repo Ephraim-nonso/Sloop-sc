@@ -1,0 +1,152 @@
+[
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_superAdmin", "type": "address" }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  { "inputs": [], "name": "NotApproved", "type": "error" },
+  { "inputs": [], "name": "NotCaller", "type": "error" },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "youAreAdded",
+        "type": "address"
+      }
+    ],
+    "name": "AddressAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "approversAddress",
+        "type": "address"
+      }
+    ],
+    "name": "Approver",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_newAddress", "type": "address" },
+      { "internalType": "uint256", "name": "_index", "type": "uint256" }
+    ],
+    "name": "addAccreditedAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "_location", "type": "bytes32" },
+      {
+        "internalType": "address[]",
+        "name": "_accredictedAddresses",
+        "type": "address[]"
+      }
+    ],
+    "name": "addOffice",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "headquaterTracker",
+    "outputs": [
+      { "internalType": "uint256", "name": "totalReceived", "type": "uint256" },
+      { "internalType": "uint128", "name": "distributed", "type": "uint128" },
+      {
+        "internalType": "uint128",
+        "name": "amountRemaianing",
+        "type": "uint128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint128",
+        "name": "_totalReceived",
+        "type": "uint128"
+      },
+      { "internalType": "uint128", "name": "_distributed", "type": "uint128" }
+    ],
+    "name": "headquaterUpdate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "index",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "officeTracker",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "officeLocation",
+        "type": "bytes32"
+      },
+      { "internalType": "uint128", "name": "totalReceived", "type": "uint128" },
+      { "internalType": "uint96", "name": "totalSold", "type": "uint96" },
+      { "internalType": "uint32", "name": "amountRemaianing", "type": "uint32" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint128",
+        "name": "_totalReceived",
+        "type": "uint128"
+      },
+      { "internalType": "uint96", "name": "_totalSold", "type": "uint96" },
+      { "internalType": "uint256", "name": "_index", "type": "uint256" }
+    ],
+    "name": "update",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint128",
+        "name": "_incomingStock",
+        "type": "uint128"
+      },
+      { "internalType": "uint256", "name": "_index", "type": "uint256" }
+    ],
+    "name": "updateTotalReceived",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint96", "name": "_totalSold", "type": "uint96" },
+      { "internalType": "uint256", "name": "_index", "type": "uint256" }
+    ],
+    "name": "updateTotalSold",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
