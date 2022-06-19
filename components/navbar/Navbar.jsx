@@ -15,7 +15,7 @@ const Navbar = () => {
     <div className="flex flex-col sm:flex-row justify-between px-10">
       <Link href="/">
         <h1
-          className="text-3xl text-[#181350] font-bold"
+          className="text-3xl text-[#181350] font-bold cursor-pointer"
           onClick={() => {
             setLogin(false);
           }}

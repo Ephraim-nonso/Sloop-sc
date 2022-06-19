@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { BsDot } from "react-icons/bs";
 import { useContract, useAccount, useSigner, useProvider } from "wagmi";
 import contractAbi from "../../utils/abi.json";
@@ -15,6 +15,7 @@ const options = [
 
 const InventoryForm = () => {
   const { edit, setEdit } = useContext(UserContext);
+  const selectEl = useRef(null);
 
   const handleEdit = () => {
     setEdit(false);
@@ -42,24 +43,34 @@ const InventoryForm = () => {
       signer
     );
 
+    if (selectEl.current.props.value.value === "add") {
+      // const addLocation = await contractInstance.addOffice();
+      console.log("Hello");
+    } else if (selectEl.current.props.value.value === "address") {
+      const addAddress = await contractInstance.addAccreditedAddress(
+        "0x71bE63f3384f5fb98995898A86B02Fb2426c5788",
+        1
+      );
+      console.log(await addAddress.wait());
+    } else {
+      const update = await contractInstance.headquaterUpdate(1, 2, {
+        gasPrice: ethers.utils.parseEther("100", "gwei"),
+        gasLimit: 1000000,
+      });
+      console.log(update);
+    }
+
     console.log(contractInstance);
-
-    const single = 1;
-    const toBePaid = JSON.stringify(single);
-    const costOfNFT = ethers.utils.parseEther(toBePaid);
-    const single2 = 2;
-    const toBePaid2 = JSON.stringify(single2);
-    const costOfNFT2 = ethers.utils.parseEther(toBePaid2);
-
-    const update = await contractInstance.headquaterUpdate(1, 2, {
-      gasPrice: ethers.utils.parseEther("100", "gwei"),
-      gasLimit: 1000000,
-    });
-    console.log(update);
   };
 
   // Get data from wagmi hooks
   const { data } = useAccount();
+
+  const onButtonClick = (e) => {
+    e.preventDefault();
+    // `current` points to the mounted text input element
+    console.log(selectEl.current.props.value.value);
+  };
 
   return (
     <div className="flex-1 h-96 bg-white border-2 border-solid">
@@ -74,7 +85,7 @@ const InventoryForm = () => {
 
         <div className="flex flex-col">
           <div className="py-3">
-            <Select options={options} />
+            <Select options={options} ref={selectEl} />
           </div>
 
           <input
