@@ -9,9 +9,11 @@ import { UserContext } from "../context/StateContext";
 import { useState } from "react";
 
 const { chains, provider } = configureChains(
-  [chain.mainnet],
+  [chain.polygonMumbai],
   [
-    jsonRpcProvider({ rpc: () => ({ http: "https://rpc.ankr.com/eth" }) }),
+    jsonRpcProvider({
+      rpc: () => ({ http: "https://rpc-mumbai.maticvigil.com" }),
+    }),
     publicProvider(),
   ]
 );
