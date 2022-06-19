@@ -8,8 +8,7 @@ const SuperAdmin = () => {
   const { edit, setEdit } = useContext(UserContext);
 
   const handleEdit = () => {
-    setEdit(!edit);
-    console.log(edit);
+    setEdit(true);
   };
 
   return (

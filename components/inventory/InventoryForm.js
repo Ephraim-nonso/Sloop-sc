@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsDot } from "react-icons/bs";
 import { useContract, useAccount, useSigner, useProvider } from "wagmi";
 import contractAbi from "../../utils/abi.json";
 import { ethers, Contract } from "ethers";
+import { UserContext } from "../../context/StateContext";
+
+import Select from "react-select";
+
+const options = [
+  { value: "update", label: "Headquarter updates" },
+  { value: "address", label: "Add Accredited Addresses" },
+  { value: "add", label: "Add Office" },
+];
 
 const InventoryForm = () => {
+  const { edit, setEdit } = useContext(UserContext);
+
+  const handleEdit = () => {
+    setEdit(false);
+  };
+
   // Use wagmi hook to interact with contract.
   const provider = useProvider();
   const contract = useContract({
@@ -29,7 +44,17 @@ const InventoryForm = () => {
 
     console.log(contractInstance);
 
-    const update = await contractInstance.headquaterUpdate("1", "2");
+    const single = 1;
+    const toBePaid = JSON.stringify(single);
+    const costOfNFT = ethers.utils.parseEther(toBePaid);
+    const single2 = 2;
+    const toBePaid2 = JSON.stringify(single2);
+    const costOfNFT2 = ethers.utils.parseEther(toBePaid2);
+
+    const update = await contractInstance.headquaterUpdate(1, 2, {
+      gasPrice: ethers.utils.parseEther("100", "gwei"),
+      gasLimit: 1000000,
+    });
     console.log(update);
   };
 
@@ -37,7 +62,7 @@ const InventoryForm = () => {
   const { data } = useAccount();
 
   return (
-    <div className="flex-1 h-80 bg-white">
+    <div className="flex-1 h-96 bg-white border-2 border-solid">
       <form className="py-5 px-20">
         <div className="flex justify-between">
           <h5 className="text-[#17C7C0] font-bold">Update investory</h5>
@@ -48,13 +73,17 @@ const InventoryForm = () => {
         </div>
 
         <div className="flex flex-col">
+          <div className="py-3">
+            <Select options={options} />
+          </div>
+
           <input
             type="text"
-            placeholder="Amount sold"
+            placeholder="Enter values..."
             className="my-4 shadow appearance-none border w-full py-2 px-3 text-[#17C7C0] leading-tight focus:outline-none focus:shadow-outline"
           />
           <input
-            type="text"
+            type="date"
             placeholder="12/06//22"
             className="my-4 shadow appearance-none border w-full py-2 px-3 text-[#17C7C0] leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -69,6 +98,13 @@ const InventoryForm = () => {
           </button>
         </div>
       </form>
+
+      <p
+        className="bg-transparent text-[#17C7C0] font-bold cursor-pointer"
+        onClick={handleEdit}
+      >
+        Close
+      </p>
     </div>
   );
 };
