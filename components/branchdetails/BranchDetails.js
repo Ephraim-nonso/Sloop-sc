@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsDot } from "react-icons/bs";
 import contractAbi from "../../utils/abi.json";
 import { ethers, Contract } from "ethers";
 import { useContract, useAccount, useSigner, useProvider } from "wagmi";
 import Select from "react-select";
 
-const options = [
-  { value: "minus", label: "Amount Sold" },
-  { value: "add", label: "Amount Received" },
-];
-
 const BranchDetails = () => {
+  const options = [
+    { value: "minus", label: "Amount Sold" },
+    { value: "add", label: "Amount Received" },
+  ];
+  // console.log(options[0].value);
+
+  const [selected, setSelected] = useState("");
+
   // Use wagmi hook to interact with contract.
   const provider = useProvider();
   const contract = useContract({
@@ -19,6 +22,13 @@ const BranchDetails = () => {
     signerOrProvider: provider,
   });
 
+  // Handle the selection of function to carry out
+  const handleChange = (e) => {
+    console.log(e.target.value);
+    setSelected(e.target.value);
+  };
+
+  // This function fits the update of products.
   const handleUpdate = async (e) => {
     e.preventDefault();
     // console.log(provider);
@@ -33,7 +43,7 @@ const BranchDetails = () => {
       signer
     );
 
-    console.log(contractInstance);
+    // console.log(contractInstance);
 
     const single = 1;
     const toBePaid = JSON.stringify(single);
@@ -42,15 +52,19 @@ const BranchDetails = () => {
     const toBePaid2 = JSON.stringify(single2);
     const costOfNFT2 = ethers.utils.parseEther(toBePaid2);
 
+    const decimals = 18;
+    const input = "999"; // Note: this is a string, e.g. user input
+    const amount = ethers.utils.parseUnits(input, decimals);
+
     const update = await contractInstance.update(
-      ethers.utils.parseEther("1000"),
-      2,
+      amount,
+      ethers.utils.parseUnits("2", 1),
       {
         gasPrice: ethers.utils.parseEther("100", "gwei"),
         gasLimit: 1000000,
       }
     );
-    console.log(update);
+    // console.log(update);
   };
 
   // Get data from wagmi hooks
@@ -86,7 +100,7 @@ const BranchDetails = () => {
         </div>
       </div>
 
-      <div className="flex-1 h-80 bg-white">
+      <div className="flex-1 h-96 bg-white">
         <form className="py-5 px-20">
           <div className="flex justify-between">
             <h5 className="text-[#17C7C0] font-bold">Update investory</h5>
@@ -103,6 +117,7 @@ const BranchDetails = () => {
           <div className="flex flex-col">
             <input
               type="text"
+              onChange={handleChange}
               placeholder="Enter values..."
               className="my-4 shadow appearance-none border w-full py-2 px-3 text-[#17C7C0] leading-tight focus:outline-none focus:shadow-outline"
             />

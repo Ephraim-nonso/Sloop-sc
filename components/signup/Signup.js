@@ -63,7 +63,7 @@ const Signup = () => {
             activities
           </p>
 
-          {data?.address ? (
+          {data?.address || !!user ? (
             <Link href={data?.address === superAdmin ? "/home" : "/branch"}>
               <button
                 className="bg-[#17C7C0] hover:bg-[#17C7d0] text-white font-bold py-2 px-4 rounded"
@@ -74,12 +74,14 @@ const Signup = () => {
             </Link>
           ) : null}
 
-          <button
-            onClick={handleLogin}
-            className="bg-[#DED207] hover:bg-[##DED247] text-white font-bold py-2 px-4 rounded my-4"
-          >
-            Login with UD
-          </button>
+          {data?.address ? null : (
+            <button
+              onClick={handleLogin}
+              className="bg-[#DED207] hover:bg-[##DED247] text-white font-bold py-2 px-4 rounded my-4"
+            >
+              Login with UD
+            </button>
+          )}
         </div>
         <div className="ml-0 sm:ml-28">
           <Image src={three} alt="computer" width={300} height={300} />
