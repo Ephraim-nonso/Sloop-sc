@@ -30,7 +30,9 @@ Login with Connected Wallet
 
 On clicking on the edit, they can:
 
-![Edit by Admin](/assets/hereadd.PNG)
+![Edit by Admin](/assets/hereadd.png)
+
+<p> Admin can add accredited addresses, add offices and update the headquarter products.</p>
 
 ![Edit by Admin](/assets/full.PNG)
 
