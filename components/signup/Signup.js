@@ -20,8 +20,8 @@ const Signup = () => {
   const { disconnect } = useDisconnect();
 
   const uauth = new UAuth({
-    clientID: "53f5cbda-bf4e-4809-946d-a8d7f23786ba",
-    redirectUri: "",
+    clientID: "b4c73b63-70b0-43c2-8aa0-5d7519d1db84",
+    redirectUri: "https://sloop-green.vercel.app/home",
     scope: "openid wallet email:optional humanity_check:optional",
   });
 
