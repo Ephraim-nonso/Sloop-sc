@@ -11,6 +11,12 @@ import { UserContext, superAdmin } from "../../context/StateContext";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 
+const uauth = new UAuth({
+  clientID: "b4c73b63-70b0-43c2-8aa0-5d7519d1db84",
+  redirectUri: "https://sloop-green.vercel.app/home",
+  scope: "openid wallet email:optional humanity_check:optional",
+});
+
 const Signup = () => {
   const { login, setLogin } = useContext(UserContext);
   const { data } = useAccount();
@@ -19,36 +25,27 @@ const Signup = () => {
   });
   const { disconnect } = useDisconnect();
 
-  const uauth = new UAuth({
-    clientID: "b4c73b63-70b0-43c2-8aa0-5d7519d1db84",
-    redirectUri: "https://sloop-green.vercel.app/home",
-    scope: "openid wallet email:optional humanity_check:optional",
-  });
 
   // Variables declaration
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
-  const [user, setUser] = useState();
-
-  // Check to see if the user is inside the cache
-  useEffect(() => {
-    setLoading(true);
-    uauth
-      .user()
-      .then(setUser)
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, []);
+  const [userAddress, setUserAddress] = useState();
 
   // Login with a popup and save the user
   const handleLogin = () => {
     setLoading(true);
-    uauth
-      .loginWithPopup()
-      .then(() => uauth.user().then(setUser))
-      .catch(setError)
-      .finally(() => setLoading(false));
+    try{
+      const userAuth = await uauth.loginWithPopup();
+
+      if(userAuth.idToken.wallet_address){
+        setUserAddress(userAuth.idToken.wallet_address);
+      }
+    } catch (error){
+      console.error(error);
+    } 
+     setLoading(false);
   };
+  
 
   return (
     <div className="max-w-3xl mx-auto mt-10 sm:mt-32">
@@ -63,8 +60,8 @@ const Signup = () => {
             activities
           </p>
 
-          {data?.address || !!user ? (
-            <Link href={data?.address === superAdmin ? "/home" : "/branch"}>
+          {data?.address || userAddress ? (
+            <Link href={data?.address || userAddress === superAdmin ? "/branch" : "/home"}>
               <button
                 className="bg-[#17C7C0] hover:bg-[#17C7d0] text-white font-bold py-2 px-4 rounded"
                 onClick={() => setLogin(true)}
@@ -74,7 +71,7 @@ const Signup = () => {
             </Link>
           ) : null}
 
-          {data?.address ? null : (
+          {data?.address || userAddress ? null : (
             <button
               onClick={handleLogin}
               className="bg-[#DED207] hover:bg-[##DED247] text-white font-bold py-2 px-4 rounded my-4"
