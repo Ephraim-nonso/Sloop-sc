@@ -12,9 +12,8 @@ import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 
 const uauth = new UAuth({
-  clientID: "b4c73b63-70b0-43c2-8aa0-5d7519d1db84",
-  redirectUri: "https://sloop-green.vercel.app/branch",
-  scope: "openid wallet email:optional humanity_check:optional",
+  clientID: "67e3fa64-85d9-416b-97ac-20bb42e3833b",
+  redirectUri: "https://sloop-green.vercel.app",
 });
 
 const Signup = () => {
@@ -28,21 +27,34 @@ const Signup = () => {
   // Variables declaration
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
-  const [userAddress, setUserAddress] = useState();
+  const [user, setUser] = useState();
 
-  // Login with a popup and save the user
-  const handleLogin = async () => {
+  useEffect(() => {
     setLoading(true);
-    try {
-      const userAuth = await uauth.loginWithPopup();
+    uauth
+      .user()
+      .then(setUser)
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
 
-      if (userAuth.idToken.wallet_address) {
-        setUserAddress(userAuth.idToken.wallet_address);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    setLoading(false);
+  //Login/out Functions
+  const handleLogin = () => {
+    setLoading(true);
+    uauth
+      .loginWithPopup()
+      .then(() => uauth.user().then(setUser))
+      .catch(setError)
+      .finally(() => setLoading(false));
+  };
+
+  const handleLogout = () => {
+    setLoading(true);
+    uauth
+      .logout()
+      .then(() => setUser(undefined))
+      .catch(setError)
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -58,31 +70,39 @@ const Signup = () => {
             activities
           </p>
 
-          {data?.address || userAddress ? (
+          {data?.address || user ? (
             <Link
               href={
-                data?.address || userAddress === superAdmin
-                  ? "/branch"
-                  : "/home"
+                data?.address || user === superAdmin ? "/branch" : "/branch"
               }
             >
               <button
-                className="bg-[#17C7C0] hover:bg-[#17C7d0] text-white font-bold py-2 px-4 rounded"
+                className="bg-[#17C7C0] hover:bg-[#17C7d0] text-white font-bold py-2 px-4 rounded-lg"
                 onClick={() => setLogin(true)}
               >
                 Go to dashboard
               </button>
             </Link>
-          ) : null}
-
-          {data?.address || userAddress ? null : (
+          ) : (
             <button
               onClick={handleLogin}
-              className="bg-[#DED207] hover:bg-[##DED247] text-white font-bold py-2 px-4 rounded my-4"
+              className="bg-[#DED207] hover:bg-[##DED247] text-white font-bold py-2 px-4 rounded-lg my-4"
             >
               Login with UD
             </button>
           )}
+          <div>
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="bg-[#07de07] hover:bg-[##DED247] text-white font-bold py-2 px-4 rounded-lg my-4 ml-2"
+              >
+                Logout UD
+              </button>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
         <div className="ml-0 sm:ml-28">
           <Image src={three} alt="computer" width={300} height={300} />
