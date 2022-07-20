@@ -95,7 +95,7 @@ const Signup = () => {
             {user ? (
               <button
                 onClick={handleLogout}
-                className="bg-[#07de07] hover:bg-[##DED247] text-white font-bold py-2 px-4 rounded-lg my-4 ml-2"
+                className="bg-[#07de07] hover:bg-[##DED247] text-white font-bold py-2 px-4 rounded-lg my-4"
               >
                 Logout UD
               </button>
